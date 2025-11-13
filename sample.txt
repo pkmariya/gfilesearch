@@ -1,0 +1,30 @@
+# Sample Document for Testing
+
+This is a sample document to test the Google File Search application.
+
+## Key Features
+
+1. **File Upload**: Upload documents to Google's Generative AI
+2. **Natural Language Search**: Search within documents using natural language queries
+3. **File Management**: List and delete files from the service
+
+## Example Content
+
+The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.
+
+### Important Information
+
+- API Key Required: You need a Google API key to use this service
+- Supported File Types: PDF, TXT, DOCX, and more
+- Maximum File Size: Check Google's documentation for current limits
+
+### Use Cases
+
+1. Document analysis and summarization
+2. Question answering from uploaded documents
+3. Information extraction from files
+4. Content search and discovery
+
+## Contact
+
+For more information, visit the GitHub repository.
