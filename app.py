@@ -84,7 +84,7 @@ def configure_api(api_key: str) -> bool:
     try:
         genai.configure(api_key=api_key)
         # Test the API key with a simple call
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         st.session_state.api_configured = True
         return True
     except Exception as e:
@@ -92,6 +92,25 @@ def configure_api(api_key: str) -> bool:
         st.session_state.api_configured = False
         return False
 
+def process_json_file(file) -> str:
+    """
+    Process and extract text from JSON files.
+    
+    Args:
+        file: Streamlit uploaded file object
+        
+    Returns:
+        str: Formatted JSON content as string
+    """
+    try:
+        content = json.load(file)
+        # Convert JSON to readable text format with indentation
+        text_content = json.dumps(content, indent=2)
+        return text_content
+    except json.JSONDecodeError as e:
+        return f"Error: Invalid JSON format - {str(e)}"
+    except Exception as e:
+        return f"Error reading JSON file: {str(e)}"
 
 def read_file_content(file) -> str:
     """
@@ -124,7 +143,10 @@ def read_file_content(file) -> str:
         elif file_extension == '.csv':
             df = pd.read_csv(file)
             return df.to_string()
-            
+        
+        elif file_extension == '.json':
+            return process_json_file(file)
+
         else:
             return f"Unsupported file type: {file_extension}"
             
@@ -183,7 +205,7 @@ def search_in_files(query: str, files_info: list) -> dict:
         dict: Search results with snippets and metadata
     """
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         # Create prompt for searching
         prompt = f"""
@@ -375,9 +397,9 @@ def main():
         
         uploaded_files = st.file_uploader(
             "Choose files to upload",
-            type=['pdf', 'txt', 'docx', 'csv'],
+            type=['pdf', 'txt', 'docx', 'csv', 'json'],
             accept_multiple_files=True,
-            help="Supported formats: PDF, TXT, DOCX, CSV"
+            help="Supported formats: PDF, TXT, DOCX, CSV, JSON"
         )
         
         col1, col2 = st.columns([1, 4])
